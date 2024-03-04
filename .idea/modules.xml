@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EADCW/EADCW.iml" filepath="$PROJECT_DIR$/EADCW/EADCW.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Enterprise-Application-Development-CW-Project-NIBMetrics.iml" filepath="$PROJECT_DIR$/.idea/Enterprise-Application-Development-CW-Project-NIBMetrics.iml" />
+    </modules>
+  </component>
+</project>
