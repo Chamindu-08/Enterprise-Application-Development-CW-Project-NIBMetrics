@@ -1,0 +1,63 @@
+CREATE TABLE batch(
+batchId VARCHAR(10) NOT NULL,
+PRIMARY KEY (batchId)
+);
+
+CREATE TABLE course(
+courseId VARCHAR(10) NOT NULL,
+courseName VARCHAR(50) NOT NULL,
+duration INT NOT NULL,
+PRIMARY KEY (courseId)
+);
+
+CREATE TABLE batchCourse(
+batchId VARCHAR(10) NOT NULL,
+courseId VARCHAR(10) NOT NULL,
+PRIMARY KEY (batchId,courseId),
+FOREIGN KEY (batchId) REFERENCES batch(batchId),
+FOREIGN KEY (courseId) REFERENCES COURSE(courseId)
+);
+
+CREATE TABLE subjects(
+subjectId VARCHAR(10) NOT NULL,
+subjectName VARCHAR(50) NOT NULL,
+cradit INT NOT NULL,
+courseId VARCHAR(10) NOT NULL,
+PRIMARY KEY (subjectId),
+FOREIGN KEY (courseId) REFERENCES COURSE(courseId)
+);
+
+CREATE TABLE student(
+studentId VARCHAR(10) NOT NULL,
+studentName VARCHAR(50),
+studentEmail VARCHAR(100) UNIQUE CHECK(StudentEmail LIKE '%@gmail.com'),
+studentPassword VARCHAR(50) NOT NULL,
+studentContactNo VARCHAR(10),
+batchId VARCHAR(10) NOT NULL,
+PRIMARY KEY (studentId),
+FOREIGN KEY (batchId) REFERENCES batch(batchId)
+);
+
+CREATE TABLE marks(
+studentId VARCHAR(10) NOT NULL,
+subjectId VARCHAR(10) NOT NULL,
+cwGrade VARCHAR(5) NOT NULL,
+examGrade VARCHAR(5) NOT NULL,
+finalGrade VARCHAR(5) NOT NULL,
+PRIMARY KEY (studentId,subjectId),
+FOREIGN KEY (studentId) REFERENCES student(studentId),
+FOREIGN KEY (subjectId) REFERENCES subjects(subjectId)
+);
+
+CREATE TABLE lecture(
+    lectureId VARCHAR(100) NOT NULL,
+    lectureName VARCHAR(50),
+    lectureNIC VARCHAR(10),
+    lectureEmail VARCHAR(100),
+    lecturePassword VARCHAR(50) NOT NULL,
+    lectureContactNo VARCHAR(10),
+    PRIMARY KEY (lectureId),
+    CONSTRAINT lectureEmail_unique UNIQUE (lectureEmail),
+    CONSTRAINT lectureEmail_gmail CHECK (lectureEmail LIKE '%@gmail.com')
+);
+
