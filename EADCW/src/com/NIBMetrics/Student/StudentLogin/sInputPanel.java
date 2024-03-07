@@ -11,6 +11,7 @@ public class sInputPanel extends JPanel {
         setLayout(new GridLayout(5,1,5,5));
 
         initializeUI();
+
     }
     private void initializeUI() {
 

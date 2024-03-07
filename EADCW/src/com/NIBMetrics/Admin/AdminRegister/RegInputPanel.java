@@ -32,4 +32,16 @@ public class RegInputPanel extends JPanel {
         add(Box.createVerticalStrut(2));
 
     }
+
+    public JTextField getNameFild() {
+        return nameFild;
+    }
+
+    public JPasswordField getPasswordField() {
+        return passwordField;
+    }
+
+    public JPasswordField getConPasswordField() {
+        return conPasswordField;
+    }
 }

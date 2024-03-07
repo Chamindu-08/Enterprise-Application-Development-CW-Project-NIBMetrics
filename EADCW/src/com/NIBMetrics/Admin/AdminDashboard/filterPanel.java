@@ -16,10 +16,10 @@ public class filterPanel extends JPanel {
     public filterPanel() {
         setLayout(new GridLayout(4, 2, 5, 5));
         initializeUI();
-        loadDataFromDatabase();
+        loadCMBValues();
     }
 
-    private void loadDataFromDatabase() {
+    private void loadCMBValues() {
         try {
             DBConnection DBC = new DBConnection();
             Connection connection = DBC.DBConnection();

@@ -98,35 +98,28 @@ public class AdminLoginScreen extends JFrame{
         String enteredUsername = inputPanel.getNameField().getText();
         String enteredPassword = new String(inputPanel.getPasswordField().getPassword());
 
-        // Connect to the database and perform the query
         try {
             DBConnection dbc = new DBConnection();
             Connection connection = dbc.DBConnection();
 
-            // Create SQL statement with prepared statement to avoid SQL injection
             String query = "SELECT lecturePassword FROM lecture WHERE lectureEmail = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, enteredUsername);
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            // Check if the user exists and the entered password matches the one in the database
             if (rs.next()) {
                 String storedPassword = rs.getString("lecturePassword");
                 if (enteredPassword.equals(storedPassword)) {
-                    // Password is correct, open admin dashboard
                     new AdminDashboardScreen().setVisible(true);
-                    dispose(); // Close the login screen
+                    dispose();
                 } else {
-                    // Incorrect password
                     JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                // User does not exist
                 JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-            // Close resources
             rs.close();
             preparedStatement.close();
             connection.close();

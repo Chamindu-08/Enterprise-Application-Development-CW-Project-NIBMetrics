@@ -1,7 +1,12 @@
 package com.NIBMetrics.Student.StudentRegister;
 
+import com.NIBMetrics.DBConnection.DBConnection;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class sRegInputPanel extends JPanel {
     private JLabel name, batch, password, conPassword;
@@ -12,6 +17,33 @@ public class sRegInputPanel extends JPanel {
         setLayout(new GridLayout(9,1,5,5));
 
         initializeUI();
+
+        loadCMBValues();
+    }
+
+    private void loadCMBValues() {
+        try {
+            DBConnection DBC = new DBConnection();
+            Connection connection = DBC.DBConnection();
+
+            if (connection != null) {
+                Statement statement = connection.createStatement();
+
+                ResultSet batchResultSet = statement.executeQuery("SELECT batchID FROM batch");
+                while (batchResultSet.next()) {
+                    String batchValue = batchResultSet.getString("batchID");
+                    batchCMB.addItem(batchValue);
+                }
+
+                batchResultSet.close();
+                statement.close();
+            } else {
+                System.out.println("Failed database connection.");
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private void initializeUI() {
 
@@ -35,6 +67,21 @@ public class sRegInputPanel extends JPanel {
 
         //empty space
         add(Box.createVerticalStrut(2));
+    }
 
+    public JTextField getNameFild() {
+        return nameFild;
+    }
+
+    public JComboBox getBatchCMB() {
+        return batchCMB;
+    }
+
+    public JPasswordField getPasswordField() {
+        return passwordField;
+    }
+
+    public JPasswordField getConPasswordField() {
+        return conPasswordField;
     }
 }

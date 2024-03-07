@@ -10,6 +10,7 @@ import com.NIBMetrics.Admin.LoginHeader;
 import com.NIBMetrics.DBConnection.DBConnection;
 import com.NIBMetrics.Student.StudentDashboard.StudentDashboardScreen;
 import com.NIBMetrics.Student.StudentNavBar;
+import com.NIBMetrics.Student.studentLoginHeader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,7 @@ public class StudentLoginScreen extends JFrame {
     public StudentLoginScreen(String title) throws HeadlessException{
         super(title);
         navBar = new LRNavBar();
-        loginHeader = new LoginHeader();
+        loginHeader = new studentLoginHeader();
         inputPanel = new sInputPanel();
         loginFooter = new LoginFooter();
         sideImg = new sSideImagePanel();
@@ -105,35 +106,28 @@ public class StudentLoginScreen extends JFrame {
         String enteredUsername = inputPanel.getNameFild().getText();
         String enteredPassword = new String(inputPanel.getPasswordField().getPassword());
 
-        // Connect to the database and perform the query
         try {
             DBConnection dbc = new DBConnection();
             Connection connection = dbc.DBConnection();
 
-            // Create SQL statement with prepared statement to avoid SQL injection
             String query = "SELECT studentPassword FROM student WHERE studentId = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, enteredUsername);
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            // Check if the user exists and the entered password matches the one in the database
             if (rs.next()) {
                 String storedPassword = rs.getString("studentPassword");
                 if (enteredPassword.equals(storedPassword)) {
-                    // Password is correct, open admin dashboard
                     new StudentDashboardScreen().setVisible(true);
-                    dispose(); // Close the login screen
+                    dispose();
                 } else {
-                    // Incorrect password
                     JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                // User does not exist
                 JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-            // Close resources
             rs.close();
             preparedStatement.close();
             connection.close();
