@@ -1,5 +1,7 @@
 package com.NIBMetrics.Student.StudentDashboard;
 
+import com.NIBMetrics.DBConnection.DBConnection;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -10,7 +12,9 @@ import java.sql.Statement;
 
 public class ResultsTablePannel extends JPanel {
     private JTable table;
-    public ResultsTablePannel() {
+    private String uName;
+    public ResultsTablePannel(String uName) {
+        this.uName=uName;
 
         setLayout(new BorderLayout());
 
@@ -31,42 +35,40 @@ public class ResultsTablePannel extends JPanel {
     }
 
     private void fetchDataFromDatabase(DefaultTableModel model) {
-        // JDBC connection parameters
-        String url = "jdbc:mysql://localhost:3350/nibm";
-        String username = "root";
-        String password = "MySql@1nibm57";
-
         try {
-            // Load the JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            DBConnection DBC = new DBConnection();
+            Connection connection = DBC.DBConnection();
 
-            // Establish the connection
-            Connection connection = DriverManager.getConnection(url, username, password);
+            if (connection != null) {
+                String studentID = uName;
 
-            // Create a statement
-            Statement statement = connection.createStatement();
+                String query = "SELECT s.subjectName, m.cwGrade, m.examGrade, m.finalGrade, s.cradit " +
+                        "FROM subjects s " +
+                        "INNER JOIN marks m ON s.subjectId = m.subjectId " +
+                        "WHERE studentID = '" + studentID + "'";
 
-            // Execute a query to retrieve data
-            ResultSet rs = statement.executeQuery("SELECT * FROM contactsdetails");
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery(query);
 
-            // Iterate through the result set and add data to the model
-            while (rs.next()) {
-                int ID;
-                String name;
-                String number;
-                model.addRow(new Object[]{
-                        ID = rs.getInt("ID"),
-                        name = rs.getString("Name"),
-                        number = rs.getString("PhoneNumber"),
-                });
+                while (rs.next()) {
+                    String subjectName = rs.getString("subjectName");
+                    String cwGrade = rs.getString("cwGrade");
+                    String examGrade = rs.getString("examGrade");
+                    String finalGrade = rs.getString("finalGrade");
+                    String cradit = rs.getString("cradit");
+
+                    model.addRow(new Object[]{subjectName, cwGrade, examGrade, finalGrade, cradit});
+                }
+
+                rs.close();
+                statement.close();
+                connection.close();
+            } else {
+                System.out.println("Failed database connection.");
             }
-
-            // Close the resources
-            rs.close();
-            statement.close();
-            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

@@ -119,7 +119,7 @@ public class StudentLoginScreen extends JFrame {
             if (rs.next()) {
                 String storedPassword = rs.getString("studentPassword");
                 if (enteredPassword.equals(storedPassword)) {
-                    new StudentDashboardScreen().setVisible(true);
+                    new StudentDashboardScreen("Student | Dashboard", enteredUsername).setVisible(true);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -135,11 +135,5 @@ public class StudentLoginScreen extends JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Database error", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new StudentLoginScreen();
-        });
     }
 }

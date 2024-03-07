@@ -1,6 +1,13 @@
 package com.NIBMetrics.Student.StudentLogout;
 
-import javax.swing.*;
+import com.NIBMetrics.WelcomePage.WelcomeScreen;
 
-public class studentLogout extends JPanel {
+import javax.swing.*;
+import java.awt.*;
+
+public class studentLogout extends JFrame {
+    public studentLogout() throws HeadlessException {
+        new WelcomeScreen().setVisible(true);
+        dispose();
+    }
 }

@@ -8,16 +8,18 @@ public class StudentDashboardScreen extends JFrame {
     private JPanel navBar;
     private JPanel gpa;
     private JPanel resultsTable;
+    private String uName;
 
     public StudentDashboardScreen() throws HeadlessException {
-        this("Student | Dashboard");
+        this("Student | Dashboard","");
     }
 
-    public StudentDashboardScreen(String title) throws HeadlessException {
+    public StudentDashboardScreen(String title,String uName) throws HeadlessException {
         super(title);
-        navBar = new StudentNavBar();
+        this.uName=uName;
+        navBar = new StudentNavBar(uName);
         gpa = new GPAPanel();
-        resultsTable = new ResultsTablePannel();
+        resultsTable = new ResultsTablePannel(uName);
         initializeUI();
     }
 
@@ -35,7 +37,7 @@ public class StudentDashboardScreen extends JFrame {
         JPanel emptyPanelEast = new JPanel();
         emptyPanelEast.setPreferredSize(new Dimension(50, getHeight()));
 
-        // Change background color
+        //change background color
         emptyPanel.setBackground(new Color(20, 33, 61));
         emptyPanelWest.setBackground(new Color(20, 33, 61));
         emptyPanelEast.setBackground(new Color(20, 33, 61));
@@ -59,11 +61,5 @@ public class StudentDashboardScreen extends JFrame {
         setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new StudentDashboardScreen();
-        });
     }
 }

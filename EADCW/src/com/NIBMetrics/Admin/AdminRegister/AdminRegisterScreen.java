@@ -162,10 +162,4 @@ public class AdminRegisterScreen extends JFrame{
         }
         return lectureID;
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new AdminRegisterScreen();
-        });
-    }
 }

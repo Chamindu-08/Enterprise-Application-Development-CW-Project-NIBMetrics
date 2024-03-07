@@ -11,8 +11,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class marksTablePanel extends JPanel{
+
     private JTable table;
-    public marksTablePanel() {
+    private String selectedProgram,selectedBatch,selectedSubject;
+    public marksTablePanel(String programe, String batch, String subject) {
+        this.selectedProgram=programe;
+        this.selectedBatch=batch;
+        this.selectedSubject=subject;
 
         setLayout(new BorderLayout());
 
@@ -40,15 +45,12 @@ public class marksTablePanel extends JPanel{
             if (connection != null) {
                 Statement statement = connection.createStatement();
 
-                ResultSet rs = statement.executeQuery("SELECT * FROM marks");
+                String marksQuery = "SELECT studentId FROM student";
+                ResultSet rs = statement.executeQuery(marksQuery);
 
                 while (rs.next()) {
                     String stuID = rs.getString("studentId");
-                    String cwg = rs.getString("cwGrade");
-                    String eg = rs.getString("examGrade");
-                    String fg = rs.getString("finalGrade");
-
-                    model.addRow(new Object[]{stuID, cwg, eg, fg});
+                    model.addRow(new Object[]{stuID});
                 }
 
                 rs.close();
@@ -60,5 +62,9 @@ public class marksTablePanel extends JPanel{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public JTable getTable() {
+        return table;
     }
 }

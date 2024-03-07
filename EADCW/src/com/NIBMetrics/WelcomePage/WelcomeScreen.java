@@ -1,5 +1,7 @@
 package com.NIBMetrics.WelcomePage;
 
+import com.NIBMetrics.Admin.AdminLogin.AdminLoginScreen;
+import com.NIBMetrics.Admin.AdminLogout.Logout;
 import com.NIBMetrics.Admin.LRNavBar;
 import com.NIBMetrics.Admin.LoginFooter;
 import com.NIBMetrics.Admin.LoginHeader;
@@ -9,12 +11,14 @@ import com.NIBMetrics.Student.StudentLogin.sSideImagePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class WelcomeScreen extends JFrame {
     private JPanel navBar;
     private JPanel welBody;
     private JPanel sideImg;
-    private JPanel welButton;
+    private JButton studentBtn, lectureBtn;
 
     public WelcomeScreen() throws HeadlessException {
         this("Student | Sign in");
@@ -25,7 +29,24 @@ public class WelcomeScreen extends JFrame {
         navBar = new welcomeNavBar();
         welBody = new welcomeBodyPanel();
         sideImg = new welcomeSideImgPanel();
-        welButton = new welcomeButtonPanel();
+        studentBtn = new JButton("Student");
+        lectureBtn = new JButton("Lecture");
+
+        studentBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new StudentLoginScreen().setVisible(true);
+                dispose();
+            }
+        });
+
+        lectureBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AdminLoginScreen().setVisible(true);
+                dispose();
+            }
+        });
         initializeUI();
     }
 
@@ -34,7 +55,13 @@ public class WelcomeScreen extends JFrame {
         container.setLayout(new BorderLayout());
         container.setBackground(new Color(20, 33, 61));
         navBar.setBackground(new Color(20, 33, 61));
-        welButton.setBackground(new Color(20, 33, 61));
+
+        //style button
+        studentBtn.setBackground(Color.BLUE);
+        studentBtn.setForeground(Color.white);
+
+        lectureBtn.setBackground(Color.BLUE);
+        lectureBtn.setForeground(Color.white);
 
         //empty panel for space
         JPanel emptyPanel = new JPanel();
@@ -45,10 +72,22 @@ public class WelcomeScreen extends JFrame {
         emptyPanelWest.setPreferredSize(new Dimension(50, getHeight()));
         emptyPanelWest.setBackground(new Color(20, 33, 61));
 
+        JPanel nestedPanel = new JPanel();
+        nestedPanel.setBackground(new Color(20, 33, 61));
+        nestedPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        nestedPanel.add(studentBtn);
+        nestedPanel.add(lectureBtn);
+
+        JPanel btnPanel = new JPanel();
+        btnPanel.setLayout(new BorderLayout());
+        btnPanel.setBackground(new Color(20, 33, 61));
+        btnPanel.add(nestedPanel, BorderLayout.CENTER);
+
         JPanel body = new JPanel();
         body.setLayout(new BorderLayout());
         body.add(welBody, BorderLayout.CENTER);
-        body.add(welButton, BorderLayout.SOUTH);
+        body.add(btnPanel, BorderLayout.SOUTH);
 
         JPanel sideImage = new JPanel();
         sideImage.setLayout(new BorderLayout());

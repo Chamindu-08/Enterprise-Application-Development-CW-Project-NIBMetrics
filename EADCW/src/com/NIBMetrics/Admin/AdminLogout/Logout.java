@@ -1,6 +1,13 @@
 package com.NIBMetrics.Admin.AdminLogout;
 
-import javax.swing.*;
+import com.NIBMetrics.WelcomePage.WelcomeScreen;
 
-public class Logout extends JPanel {
+import javax.swing.*;
+import java.awt.*;
+
+public class Logout extends JFrame {
+    public Logout() throws HeadlessException {
+        new WelcomeScreen().setVisible(true);
+        dispose();
+    }
 }

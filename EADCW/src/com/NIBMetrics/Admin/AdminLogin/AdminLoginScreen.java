@@ -111,7 +111,7 @@ public class AdminLoginScreen extends JFrame{
             if (rs.next()) {
                 String storedPassword = rs.getString("lecturePassword");
                 if (enteredPassword.equals(storedPassword)) {
-                    new AdminDashboardScreen().setVisible(true);
+                    new AdminDashboardScreen("Admin | Dashboard", enteredUsername).setVisible(true);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -128,11 +128,4 @@ public class AdminLoginScreen extends JFrame{
             JOptionPane.showMessageDialog(this, "Database error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new AdminLoginScreen();
-        });
-    }
-
 }

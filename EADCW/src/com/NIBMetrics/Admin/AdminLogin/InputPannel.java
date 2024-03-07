@@ -24,7 +24,7 @@ public class InputPannel extends JPanel {
         add(passwordLabel);
         add(passwordField);
 
-        // empty space
+        //empty space
         add(Box.createVerticalStrut(2));
     }
 

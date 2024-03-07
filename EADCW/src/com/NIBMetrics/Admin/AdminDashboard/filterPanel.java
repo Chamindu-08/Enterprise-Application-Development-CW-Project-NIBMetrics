@@ -45,7 +45,6 @@ public class filterPanel extends JPanel {
                     subjectCMB.addItem(subjectValue);
                 }
 
-                // Close result sets and statement
                 programResultSet.close();
                 batchResultSet.close();
                 subjectResultSet.close();
@@ -54,7 +53,6 @@ public class filterPanel extends JPanel {
                 System.out.println("Failed database connection.");
             }
 
-            // Close connection
             connection.close();
 
         } catch (Exception e) {
@@ -82,5 +80,17 @@ public class filterPanel extends JPanel {
 
         // empty space
         add(Box.createVerticalStrut(2));
+    }
+
+    public JComboBox<String> getProgramCMB() {
+        return programCMB;
+    }
+
+    public JComboBox<String> getBatchCMB() {
+        return batchCMB;
+    }
+
+    public JComboBox<String> getSubjectCMB() {
+        return subjectCMB;
     }
 }

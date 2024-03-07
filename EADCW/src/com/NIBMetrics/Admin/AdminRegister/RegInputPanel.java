@@ -30,7 +30,6 @@ public class RegInputPanel extends JPanel {
 
         //empty space
         add(Box.createVerticalStrut(2));
-
     }
 
     public JTextField getNameFild() {
