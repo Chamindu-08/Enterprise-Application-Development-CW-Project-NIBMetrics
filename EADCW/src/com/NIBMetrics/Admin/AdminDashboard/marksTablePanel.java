@@ -1,5 +1,7 @@
 package com.NIBMetrics.Admin.AdminDashboard;
 
+import com.NIBMetrics.DBConnection.DBConnection;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -31,40 +33,30 @@ public class marksTablePanel extends JPanel{
     }
 
     private void fetchDataFromDatabase(DefaultTableModel model) {
-        // JDBC connection parameters
-        String url = "jdbc:mysql://localhost:3350/nibm";
-        String username = "root";
-        String password = "MySql@1nibm57";
-
         try {
-            // Load the JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            DBConnection DBC = new DBConnection();
+            Connection connection = DBC.DBConnection();
 
-            // Establish the connection
-            Connection connection = DriverManager.getConnection(url, username, password);
+            if (connection != null) {
+                Statement statement = connection.createStatement();
 
-            // Create a statement
-            Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM marks");
 
-            // Execute a query to retrieve data
-            ResultSet rs = statement.executeQuery("SELECT * FROM contactsdetails");
+                while (rs.next()) {
+                    String stuID = rs.getString("studentId");
+                    String cwg = rs.getString("cwGrade");
+                    String eg = rs.getString("examGrade");
+                    String fg = rs.getString("finalGrade");
 
-            // Iterate through the result set and add data to the model
-            while (rs.next()) {
-                int ID;
-                String name;
-                String number;
-                model.addRow(new Object[]{
-                        ID = rs.getInt("ID"),
-                        name = rs.getString("Name"),
-                        number = rs.getString("PhoneNumber"),
-                });
+                    model.addRow(new Object[]{stuID, cwg, eg, fg});
+                }
+
+                rs.close();
+                statement.close();
+                connection.close();
+            } else {
+                System.out.println("Failed database connection.");
             }
-
-            // Close the resources
-            rs.close();
-            statement.close();
-            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

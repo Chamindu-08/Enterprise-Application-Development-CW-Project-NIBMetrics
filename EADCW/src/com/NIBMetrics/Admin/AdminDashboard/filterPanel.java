@@ -1,18 +1,69 @@
 package com.NIBMetrics.Admin.AdminDashboard;
 
+import com.NIBMetrics.DBConnection.DBConnection;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class filterPanel extends JPanel {
-    private JComboBox programCMB, batchCMB, subjectCMB;
+    private JComboBox<String> programCMB, batchCMB, subjectCMB;
     private JLabel program, batch, subject;
+
     public filterPanel() {
-        setLayout(new GridLayout(4,2,5,5));
+        setLayout(new GridLayout(4, 2, 5, 5));
         initializeUI();
+        loadDataFromDatabase();
+    }
+
+    private void loadDataFromDatabase() {
+        try {
+            DBConnection DBC = new DBConnection();
+            Connection connection = DBC.DBConnection();
+
+            if (connection != null) {
+                Statement statement = connection.createStatement();
+
+                ResultSet programResultSet = statement.executeQuery("SELECT courseID FROM course");
+                while (programResultSet.next()) {
+                    String programValue = programResultSet.getString("courseID");
+                    programCMB.addItem(programValue);
+                }
+
+                ResultSet batchResultSet = statement.executeQuery("SELECT batchID FROM batch");
+                while (batchResultSet.next()) {
+                    String batchValue = batchResultSet.getString("batchID");
+                    batchCMB.addItem(batchValue);
+                }
+
+                ResultSet subjectResultSet = statement.executeQuery("SELECT subjectName FROM subjects");
+                while (subjectResultSet.next()) {
+                    String subjectValue = subjectResultSet.getString("subjectName");
+                    subjectCMB.addItem(subjectValue);
+                }
+
+                // Close result sets and statement
+                programResultSet.close();
+                batchResultSet.close();
+                subjectResultSet.close();
+                statement.close();
+            } else {
+                System.out.println("Failed database connection.");
+            }
+
+            // Close connection
+            connection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initializeUI() {
-        program = new JLabel("Programe");
+        program = new JLabel("Program");
         programCMB = new JComboBox<>();
         batch = new JLabel("Batch");
         batchCMB = new JComboBox<>();
@@ -29,7 +80,7 @@ public class filterPanel extends JPanel {
         add(subject);
         add(subjectCMB);
 
-        //empty space
+        // empty space
         add(Box.createVerticalStrut(2));
     }
 }

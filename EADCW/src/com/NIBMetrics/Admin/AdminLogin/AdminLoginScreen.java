@@ -5,16 +5,22 @@ import com.NIBMetrics.Admin.AdminNavBar;
 import com.NIBMetrics.Admin.LRNavBar;
 import com.NIBMetrics.Admin.LoginFooter;
 import com.NIBMetrics.Admin.LoginHeader;
+import com.NIBMetrics.DBConnection.DBConnection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class AdminLoginScreen extends JFrame{
-    private JPanel inputPanel;
+    private InputPannel inputPanel;
     private JPanel navBar;
     private JPanel loginHeader;
     private JPanel loginFooter;
     private JPanel sideImg;
+    private JButton loginBtn;
+
 
     public AdminLoginScreen() throws HeadlessException {
         this("Admin | Sign in");
@@ -27,6 +33,15 @@ public class AdminLoginScreen extends JFrame{
         inputPanel = new InputPannel();
         loginFooter = new LoginFooter();
         sideImg = new SideImagePanel();
+
+        loginBtn = new JButton("Login");
+
+        loginBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkPassword();
+            }
+        });
         initializeUI();
     }
 
@@ -37,7 +52,14 @@ public class AdminLoginScreen extends JFrame{
         container.setBackground(Color.WHITE);
         loginHeader.setBackground(Color.WHITE);
 
+        //set login button
         loginFooter.setBackground(Color.WHITE);
+        Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+
+        //set button font, background color, font color
+        loginBtn.setFont(font);
+        loginBtn.setBackground(new Color(20, 33, 61));
+        loginBtn.setForeground(Color.WHITE);
 
         //empty panel for space
         JPanel emptyPanel = new JPanel();
@@ -46,11 +68,16 @@ public class AdminLoginScreen extends JFrame{
         JPanel emptyPanelWest = new JPanel();
         emptyPanelWest.setPreferredSize(new Dimension(50, getHeight()));
 
+        JPanel footer = new JPanel();
+        footer.setLayout(new BorderLayout());
+        footer.add(loginFooter, BorderLayout.NORTH);
+        footer.add(loginBtn, BorderLayout.SOUTH);
+
         JPanel inputSetup = new JPanel();
         inputSetup.setLayout(new BorderLayout());
         inputSetup.add(loginHeader, BorderLayout.NORTH);
         inputSetup.add(inputPanel, BorderLayout.CENTER);
-        inputSetup.add(loginFooter, BorderLayout.SOUTH);
+        inputSetup.add(footer, BorderLayout.SOUTH);
 
         JPanel sideImage = new JPanel();
         sideImage.setLayout(new BorderLayout());
@@ -65,6 +92,48 @@ public class AdminLoginScreen extends JFrame{
         setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private void checkPassword() {
+        String enteredUsername = inputPanel.getNameField().getText();
+        String enteredPassword = new String(inputPanel.getPasswordField().getPassword());
+
+        // Connect to the database and perform the query
+        try {
+            DBConnection dbc = new DBConnection();
+            Connection connection = dbc.DBConnection();
+
+            // Create SQL statement with prepared statement to avoid SQL injection
+            String query = "SELECT lecturePassword FROM lecture WHERE lectureEmail = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, enteredUsername);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Check if the user exists and the entered password matches the one in the database
+            if (rs.next()) {
+                String storedPassword = rs.getString("lecturePassword");
+                if (enteredPassword.equals(storedPassword)) {
+                    // Password is correct, open admin dashboard
+                    new AdminDashboardScreen().setVisible(true);
+                    dispose(); // Close the login screen
+                } else {
+                    // Incorrect password
+                    JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                // User does not exist
+                JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            // Close resources
+            rs.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database error", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {

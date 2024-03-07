@@ -4,28 +4,35 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InputPannel extends JPanel {
-    private JLabel name,password;
-    private JTextField nameFild;
+    private JLabel nameLabel, passwordLabel;
+    private JTextField nameField;
     private JPasswordField passwordField;
-    public InputPannel() {
-        setLayout(new GridLayout(5,1,5,5));
 
+    public InputPannel() {
+        setLayout(new GridLayout(5, 1, 5, 5));
         initializeUI();
     }
-    private void initializeUI() {
 
-        name = new JLabel("User Name :");
-        password = new JLabel("Enter your Password :");
-        nameFild = new JTextField(12);
+    private void initializeUI() {
+        nameLabel = new JLabel("User Name:");
+        passwordLabel = new JLabel("Enter your Password:");
+        nameField = new JTextField(12);
         passwordField = new JPasswordField(12);
 
-        add(name);
-        add(nameFild);
-        add(password);
+        add(nameLabel);
+        add(nameField);
+        add(passwordLabel);
         add(passwordField);
 
-        //empty space
+        // empty space
         add(Box.createVerticalStrut(2));
+    }
 
+    public JTextField getNameField() {
+        return nameField;
+    }
+
+    public JPasswordField getPasswordField() {
+        return passwordField;
     }
 }

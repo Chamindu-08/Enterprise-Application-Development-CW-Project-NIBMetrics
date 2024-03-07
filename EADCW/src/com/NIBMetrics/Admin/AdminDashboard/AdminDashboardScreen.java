@@ -1,5 +1,6 @@
 package com.NIBMetrics.Admin.AdminDashboard;
 
+import com.NIBMetrics.Admin.AdminLogin.InputPannel;
 import com.NIBMetrics.Admin.AdminNavBar;
 import com.NIBMetrics.Student.StudentDashboard.StudentDashboardScreen;
 import com.NIBMetrics.Student.StudentNavBar;
@@ -12,6 +13,7 @@ public class AdminDashboardScreen extends JFrame {
     private JPanel filterPanel;
     private JPanel marksTable;
     private JPanel submit;
+    private String uName,uPassword;
     public AdminDashboardScreen() throws HeadlessException {
         this("Admin | Dashboard");
     }
@@ -66,9 +68,14 @@ public class AdminDashboardScreen extends JFrame {
         setVisible(true);
     }
 
+    private void checkPassword(){
+        InputPannel inputPanel = new InputPannel();
+        String uName = inputPanel.getNameField().getText();
+        String uPassword = new String(inputPanel.getPasswordField().getPassword());
+        System.out.println(uName);
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
             new AdminDashboardScreen();
-        });
     }
 }

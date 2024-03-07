@@ -86,5 +86,4 @@ public class AdminNavBar extends JPanel{
         add(studentName, BorderLayout.EAST);
         add(welcomePanel, BorderLayout.SOUTH);
     }
-
 }
