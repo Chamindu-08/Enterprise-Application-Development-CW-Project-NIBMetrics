@@ -61,7 +61,9 @@ public class studentLoginHeader extends JPanel {
         row3.add(title3);
 
         //button transparent
+        singupBtn.setOpaque(false);
         singupBtn.setContentAreaFilled(false);
+        singupBtn.setBorderPainted(false);
 
         JPanel signupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         signupPanel.add(singupBtn);

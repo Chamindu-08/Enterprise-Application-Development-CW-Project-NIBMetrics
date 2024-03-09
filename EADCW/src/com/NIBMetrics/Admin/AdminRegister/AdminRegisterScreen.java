@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.*;
 
 public class AdminRegisterScreen extends JFrame{
     private RegInputPanel inputPanel;
@@ -23,6 +24,8 @@ public class AdminRegisterScreen extends JFrame{
     private JPanel registerHeader;
     private JPanel sideImg;
     private JButton registerBtn;
+    private Connection connection;
+    private Statement statement;
 
     public AdminRegisterScreen() throws HeadlessException {
         this("Admin | Sing in");
@@ -101,28 +104,28 @@ public class AdminRegisterScreen extends JFrame{
 
         try {
             DBConnection dbc = new DBConnection();
-            Connection connection = dbc.DBConnection();
+            this.connection = dbc.DBConnection();
+            this.statement = this.connection.createStatement();
 
             if (enteredPassword.equals(enteredComPassword)) {
 
-                String query = "INSERT INTO lecture(lectureId,lectureEmail,lecturePassword)\n" +
-                        "VALUE (?, ?, ?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, lectureID);
-                preparedStatement.setString(2, enteredUsername);
-                preparedStatement.setString(3, enteredPassword);
+                StringBuilder sql = new StringBuilder("INSERT INTO lecture(lectureId,lectureEmail,lecturePassword)");
+                sql.append("VALUES( ");
+                sql.append("'").append(lectureID).append("',");
+                sql.append("'").append(enteredUsername).append("',");
+                sql.append("'").append(enteredPassword).append("'");
+                sql.append(")");
 
-                int rowsAffected = preparedStatement.executeUpdate();
-
-                if (rowsAffected > 0) {
+                int status = statement.executeUpdate(sql.toString());
+                if (status > 0) {
                     JOptionPane.showMessageDialog(this, "Admin registered successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     new AdminLoginScreen().setVisible(true);
                     dispose();
-                } else {
+                }
+                else {
                     JOptionPane.showMessageDialog(this, "Failed to register admin", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-                preparedStatement.close();
                 connection.close();
             } else {
                 JOptionPane.showMessageDialog(this, "Passwords don't match", "Error", JOptionPane.ERROR_MESSAGE);

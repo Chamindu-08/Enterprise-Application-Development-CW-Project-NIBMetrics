@@ -62,7 +62,9 @@ public class studentRegisterHeader extends JPanel {
         row3.add(title3);
 
         //button transparent
+        singinBtn.setOpaque(false);
         singinBtn.setContentAreaFilled(false);
+        singinBtn.setBorderPainted(false);
 
         JPanel signupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         signupPanel.add(singinBtn);

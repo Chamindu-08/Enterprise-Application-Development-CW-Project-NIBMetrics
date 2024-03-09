@@ -11,10 +11,9 @@ import com.NIBMetrics.Student.StudentLogin.sSideImagePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class WelcomeScreen extends JFrame {
+public class WelcomeScreen extends JFrame{
     private JPanel navBar;
     private JPanel welBody;
     private JPanel sideImg;
@@ -98,6 +97,34 @@ public class WelcomeScreen extends JFrame {
         container.add(sideImage, BorderLayout.EAST);
         container.add(emptyPanel, BorderLayout.SOUTH);
         container.add(emptyPanelWest, BorderLayout.WEST);
+
+        this.lectureBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                ((JButton) e.getSource()).setBackground(Color.white);
+                ((JButton) e.getSource()).setForeground(Color.BLUE);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                ((JButton) e.getSource()).setBackground(Color.BLUE);
+                ((JButton) e.getSource()).setForeground(Color.white);
+            }
+        });
+
+        this.studentBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                ((JButton) e.getSource()).setBackground(Color.white);
+                ((JButton) e.getSource()).setForeground(Color.BLUE);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                ((JButton) e.getSource()).setBackground(Color.BLUE);
+                ((JButton) e.getSource()).setForeground(Color.white);
+            }
+        });
 
         setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

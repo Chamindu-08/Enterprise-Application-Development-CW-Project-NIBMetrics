@@ -123,6 +123,8 @@ public class StudentProfileScreen extends JFrame {
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
                 JOptionPane.showMessageDialog(this, "Profile updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                getRootPane().getParent().setVisible(false);
+                new StudentProfileScreen("Admin | Profile", uName).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Profile update failed", "Error", JOptionPane.ERROR_MESSAGE);
             }

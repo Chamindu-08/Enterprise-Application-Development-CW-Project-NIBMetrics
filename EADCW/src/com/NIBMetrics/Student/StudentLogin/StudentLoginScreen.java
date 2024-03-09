@@ -16,10 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class StudentLoginScreen extends JFrame {
     private sInputPanel inputPanel;
@@ -28,6 +25,8 @@ public class StudentLoginScreen extends JFrame {
     private JPanel loginFooter;
     private JPanel sideImg;
     private JButton loginBtn;
+    private Connection connection;
+    private Statement statement;
 
     public StudentLoginScreen() throws HeadlessException {
         this("Student | Sign in");
@@ -108,7 +107,8 @@ public class StudentLoginScreen extends JFrame {
 
         try {
             DBConnection dbc = new DBConnection();
-            Connection connection = dbc.DBConnection();
+            this.connection = dbc.DBConnection();
+            this.statement = this.connection.createStatement();
 
             String query = "SELECT studentPassword FROM student WHERE studentId = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);

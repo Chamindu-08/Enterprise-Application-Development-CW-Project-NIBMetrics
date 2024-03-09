@@ -142,6 +142,8 @@ public class MarkUpdateScreen extends JFrame {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(this, "Marks updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                getRootPane().getParent().setVisible(false);
+                new MarkUpdateScreen("Admin | Result Update", uName).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to update marks", "Error", JOptionPane.ERROR_MESSAGE);
             }

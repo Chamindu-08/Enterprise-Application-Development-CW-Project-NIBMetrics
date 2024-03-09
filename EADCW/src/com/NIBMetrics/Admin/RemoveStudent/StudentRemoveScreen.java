@@ -117,6 +117,8 @@ public class StudentRemoveScreen extends JFrame{
 
             if (studentRowsAffected > 0 && marksRowsAffected > 0) {
                 JOptionPane.showMessageDialog(this, "Student removed successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                getRootPane().getParent().setVisible(false);
+                new StudentRemoveScreen("Admin | Student Remove", uName).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to remove student", "Error", JOptionPane.ERROR_MESSAGE);
             }

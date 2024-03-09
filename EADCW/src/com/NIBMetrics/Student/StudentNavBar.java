@@ -111,8 +111,7 @@ public class StudentNavBar extends JPanel {
         homeV.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-
+                getRootPane().getParent().setVisible(false);
                 new StudentDashboardScreen("Admin | Dashboard", uName).setVisible(true);
             }
         });

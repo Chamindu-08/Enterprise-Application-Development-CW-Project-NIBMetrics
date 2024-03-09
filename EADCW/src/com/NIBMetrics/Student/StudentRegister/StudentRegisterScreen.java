@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class StudentRegisterScreen extends JFrame {
     private sRegInputPanel inputPanel;
@@ -21,6 +22,8 @@ public class StudentRegisterScreen extends JFrame {
     private JPanel registerHeader;
     private JPanel sideImg;
     private JButton registerBtn;
+    private Connection connection;
+    private Statement statement;
 
     public StudentRegisterScreen() throws HeadlessException {
         this("Student | Sing in");
@@ -104,26 +107,26 @@ public class StudentRegisterScreen extends JFrame {
 
         try {
             DBConnection dbc = new DBConnection();
-            Connection connection = dbc.DBConnection();
+            this.connection = dbc.DBConnection();
+            this.statement = this.connection.createStatement();
 
-            String query = "INSERT INTO student(studentId,studentPassword,batchId)\n" +
-                    "VALUE (?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, enteredUsername);
-            preparedStatement.setString(2, enteredPassword);
-            preparedStatement.setString(3, selectedValue);
+            StringBuilder sql = new StringBuilder("INSERT INTO student(studentId,studentPassword,batchId)");
+            sql.append("VALUES(");
+            sql.append("'").append(enteredUsername).append("',");
+            sql.append("'").append(enteredPassword).append("',");
+            sql.append("'").append(selectedValue).append("'");
+            sql.append(")");
 
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
+            int status = statement.executeUpdate(sql.toString());
+            if (status > 0) {
                 JOptionPane.showMessageDialog(this, "Student registered successfully", "Success Regidtation", JOptionPane.INFORMATION_MESSAGE);
                 new StudentLoginScreen().setVisible(true);
                 dispose();
-            } else {
+            }
+            else {
                 JOptionPane.showMessageDialog(this, "Failed to register student", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-            preparedStatement.close();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
