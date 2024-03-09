@@ -7,12 +7,14 @@ import com.NIBMetrics.Admin.MarkUpdate.MarkUpdateScreen;
 import com.NIBMetrics.Admin.RemoveStudent.StudentRemoveScreen;
 import com.NIBMetrics.DBConnection.DBConnection;
 import com.NIBMetrics.Student.StudentDashboard.StudentDashboardScreen;
+import com.NIBMetrics.Student.StudentLogin.StudentLoginScreen;
 import com.NIBMetrics.Student.StudentProfile.StudentProfileScreen;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,11 +41,11 @@ public class StudentNavBar extends JPanel {
 
         //create panel to center the menu bar
         JPanel menuPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        menuPanel.setBackground(new Color(20, 33, 61)); // change background color
+        menuPanel.setBackground(new Color(20, 33, 61)); //change background color
 
         JMenuBar menuBar = new JMenuBar();
-        menuBar.setBackground(new Color(20, 33, 61)); // change background color
-        UIManager.put("Menu.foreground", Color.WHITE); // change font color
+        menuBar.setBackground(new Color(20, 33, 61)); //change background color
+        UIManager.put("Menu.foreground", Color.WHITE); //change font color
 
         //set menu items
         home = new JMenu("Home");
@@ -51,7 +53,7 @@ public class StudentNavBar extends JPanel {
         results = new JMenu("Results");
         logout = new JMenu("Logout");
 
-        // set sub menuitems
+        //set sub menuitems
         homeV = new JMenuItem("Home");
         profileVU = new JMenuItem("Profile");
         resultV = new JMenuItem("Results");
@@ -109,6 +111,8 @@ public class StudentNavBar extends JPanel {
         homeV.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+
                 new StudentDashboardScreen("Admin | Dashboard", uName).setVisible(true);
             }
         });
@@ -116,6 +120,7 @@ public class StudentNavBar extends JPanel {
         profileVU.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new StudentProfileScreen("Admin | Profile", uName).setVisible(true);
             }
         });
@@ -123,6 +128,7 @@ public class StudentNavBar extends JPanel {
         resultV.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new StudentDashboardScreen("Admin | Profile", uName).setVisible(true);
             }
         });
@@ -130,11 +136,13 @@ public class StudentNavBar extends JPanel {
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new Logout().setVisible(true);
             }
         });
     }
 
+    //get student name form database
     private String getStudentName(String uName) {
         String studentName = "";
         try {

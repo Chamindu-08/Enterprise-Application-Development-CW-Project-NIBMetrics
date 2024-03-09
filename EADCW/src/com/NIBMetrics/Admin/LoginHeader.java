@@ -1,7 +1,12 @@
 package com.NIBMetrics.Admin;
 
+import com.NIBMetrics.Admin.AdminRegister.AdminRegisterScreen;
+import com.NIBMetrics.Student.StudentRegister.StudentRegisterScreen;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginHeader extends JPanel {
     private JLabel title1, title2, title3;
@@ -9,6 +14,17 @@ public class LoginHeader extends JPanel {
 
     public LoginHeader() {
         setLayout(new BorderLayout());
+
+        singupBtn = new JButton("Sign up");
+
+        singupBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
+                new AdminRegisterScreen().setVisible(true);
+            }
+        });
+
         initializeUI();
     }
 
@@ -16,9 +32,9 @@ public class LoginHeader extends JPanel {
         title1 = new JLabel();
         title2 = new JLabel();
         title3 = new JLabel();
-        singupBtn = new JButton("Sing up");
 
         singupBtn.setPreferredSize(new Dimension(80, 20));
+        singupBtn.setBorder(BorderFactory.createEmptyBorder());
 
         title1.setText("Welcome to NIBMetrics.");
         title2.setText("Sign in");

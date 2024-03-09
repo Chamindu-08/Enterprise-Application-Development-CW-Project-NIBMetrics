@@ -19,6 +19,7 @@ public class studentLoginHeader extends JPanel {
         singupBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new StudentRegisterScreen().setVisible(true);
             }
         });
@@ -30,8 +31,8 @@ public class studentLoginHeader extends JPanel {
         title2 = new JLabel();
         title3 = new JLabel();
 
-
         singupBtn.setPreferredSize(new Dimension(80, 20));
+        singupBtn.setBorder(BorderFactory.createEmptyBorder());
 
         title1.setText("Welcome to NIBMetrics.");
         title2.setText("Sign in");

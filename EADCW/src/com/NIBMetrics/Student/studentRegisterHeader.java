@@ -20,6 +20,7 @@ public class studentRegisterHeader extends JPanel {
         singinBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new StudentLoginScreen().setVisible(true);
             }
         });
@@ -33,6 +34,7 @@ public class studentRegisterHeader extends JPanel {
 
 
         singinBtn.setPreferredSize(new Dimension(80, 20));
+        singinBtn.setBorder(BorderFactory.createEmptyBorder());
 
         title1.setText("Welcome to NIBMetrics.");
         title2.setText("Sign up");

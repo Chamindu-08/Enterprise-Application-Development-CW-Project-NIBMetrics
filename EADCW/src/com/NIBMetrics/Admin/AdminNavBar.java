@@ -116,6 +116,7 @@ public class AdminNavBar extends JPanel{
         ra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new AdminDashboardScreen("Admin | Dashboard", uName).setVisible(true);
             }
         });
@@ -123,6 +124,7 @@ public class AdminNavBar extends JPanel{
         ru.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new MarkUpdateScreen("Admin | Result Update", uName).setVisible(true);
             }
         });
@@ -130,6 +132,7 @@ public class AdminNavBar extends JPanel{
         sr.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new StudentRemoveScreen("Admin | Student Remove", uName).setVisible(true);
             }
         });
@@ -137,6 +140,7 @@ public class AdminNavBar extends JPanel{
         homeV.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new AdminDashboardScreen("Admin | Dashboard", uName).setVisible(true);
             }
         });
@@ -144,6 +148,7 @@ public class AdminNavBar extends JPanel{
         profileVU.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new AdminProfileScreen("Admin | Profile", uName).setVisible(true);
             }
         });
@@ -151,11 +156,13 @@ public class AdminNavBar extends JPanel{
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
                 new Logout().setVisible(true);
             }
         });
     }
 
+    //get user name from database
     private String getAdminName(String uName) {
         String lectureName = "";
         try {

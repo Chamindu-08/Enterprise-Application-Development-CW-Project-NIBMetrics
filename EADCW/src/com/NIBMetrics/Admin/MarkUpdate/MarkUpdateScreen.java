@@ -36,6 +36,7 @@ public class MarkUpdateScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateMark();
+                getRootPane().getParent().setVisible(false);
             }
         });
 

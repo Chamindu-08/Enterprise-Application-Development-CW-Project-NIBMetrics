@@ -46,7 +46,7 @@ public class spInputFild extends JPanel {
         contactFild = new JTextField(12);
         passwordField = new JPasswordField(12);
         conPasswordFild = new JPasswordField(12);
-        batchCMB = new  JPasswordField(12);
+        batchCMB = new  JTextField(12);
 
         add(sName);
         add(sId);

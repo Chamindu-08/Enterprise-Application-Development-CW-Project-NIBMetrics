@@ -33,6 +33,7 @@ public class StudentProfileScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateProfile();
+                getRootPane().getParent().setVisible(false);
             }
         });
 
@@ -110,7 +111,7 @@ public class StudentProfileScreen extends JFrame {
             DBConnection dbc = new DBConnection();
             Connection connection = dbc.DBConnection();
 
-            String query = "UPDATE lecture SET studentName = ?, studentContactNo = ?, studentEmail = ?, studentPassword = ? WHERE studentId = ?";
+            String query = "UPDATE student SET studentName = ?, studentContactNo = ?, studentEmail = ?, studentPassword = ? WHERE studentId = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, enteredUsername);

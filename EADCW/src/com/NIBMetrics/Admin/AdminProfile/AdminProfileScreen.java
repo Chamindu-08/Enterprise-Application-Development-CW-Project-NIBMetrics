@@ -35,6 +35,7 @@ public class AdminProfileScreen extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateProfile();
+                getRootPane().getParent().setVisible(false);
             }
         });
 

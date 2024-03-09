@@ -1,7 +1,11 @@
 package com.NIBMetrics.Admin;
 
+import com.NIBMetrics.Admin.AdminRegister.AdminRegisterScreen;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RegiserHeader extends JPanel {
     private JLabel title1, title2, title3;
@@ -9,6 +13,16 @@ public class RegiserHeader extends JPanel {
 
     public RegiserHeader() {
         setLayout(new BorderLayout());
+
+        singinBtn = new JButton("Sign in");
+        singinBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getRootPane().getParent().setVisible(false);
+                new AdminRegisterScreen().setVisible(true);
+            }
+        });
+
         initializeUI();
     }
 
@@ -16,9 +30,9 @@ public class RegiserHeader extends JPanel {
         title1 = new JLabel();
         title2 = new JLabel();
         title3 = new JLabel();
-        singinBtn = new JButton("Sing in");
 
         singinBtn.setPreferredSize(new Dimension(80, 20));
+        singinBtn.setBorder(BorderFactory.createEmptyBorder());
 
         title1.setText("Welcome to NIBMetrics.");
         title2.setText("Sign up");

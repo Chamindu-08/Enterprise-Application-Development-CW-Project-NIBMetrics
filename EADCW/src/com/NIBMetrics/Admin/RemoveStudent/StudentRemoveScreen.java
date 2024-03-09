@@ -34,6 +34,7 @@ public class StudentRemoveScreen extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeStudent();
+                getRootPane().getParent().setVisible(false);
             }
         });
 
